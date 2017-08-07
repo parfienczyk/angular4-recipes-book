@@ -1,5 +1,6 @@
 import {Recipe} from './../recipe.model';
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {RecipeService} from "../recipe.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -8,35 +9,13 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class RecipeListComponent implements OnInit {
 
-  @Output() recipeWasSelected = new EventEmitter<Recipe>();
+  recipes: Recipe[];
 
-  recipes: Recipe[] = [
-    {
-      name: 'test',
-      description: 'simple description',
-      imagePath: 'https://supervalu.ie/image/var/files/real-food/recipes/operation-transformation-recipes/fish-cakes-recipe.jpg'
-    },
-    {
-      name: 'Mercola Recipes',
-      description: 'In a professional context it often happens that private or corporate clients corder a publication to be made and presented with the actual content still not being ready',
-      imagePath: 'http://media.mercola.com/assets/images/recipes/baked-avocado-recipe.jpg'
-    },
-    {
-      name: 'test',
-      description: 'In a professional context it often happens that private or corporate clients corder a publication to be made and presented with the actual content still not being ready',
-      imagePath: 'https://supervalu.ie/image/var/files/real-food/recipes/operation-transformation-recipes/fish-cakes-recipe.jpg'
-    },
-  ];
-
-  constructor() {
+  constructor(private recipeService: RecipeService) {
   }
 
   ngOnInit() {
+    this.recipes = this.recipeService.getRecipes();
 
   }
-
-  onRecipeSelected(recipe: Recipe) {
-    this.recipeWasSelected.emit(recipe);
-  }
-
 }
